@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration defines this document as HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- The charset meta tag specifies the character encoding for this HTML document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The viewport meta tag ensures the page is displayed correctly across all devices -->
+    <title>Ultimate Tic Tac Toe</title>
+    <!-- The title of the web page as it will appear in the browser tab -->
+    <style>
+        /* All the CSS styles for the page is here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            background-color: rgb(149, 77, 77);
+            color: rgb(9, 8, 8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 70vh;
+            margin: 0;
+        }
+        form {
+            margin: 10px 0;
+        }
+        input[type=text] {
+            margin-top: 20px; /* Adds space above the Game ID input */
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px; /* Ensures space between the button and the previous element */
+            border: none;     /*chose not to give any border */
+            border-radius: 5px;
+            background-color: #ceced0;
+            color: #231e1e;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #dc1919;
+        }
+         /* Style for the game history box */
+        .history-container {
+            background-color: #303030;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        /* Style for headings in the history box */
+        .history-container h1,h2 {
+            color: #FFFFFF;
+        }
+
+        /* Style for paragraphs in the history box */
+        .history-container p {
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- A heading which is appearing on top the template -->
+    <h1>Game Options</h1>
+    <!-- Player can see their win,loss and draw history here -->
+    <div class="history-container">
+        <h1>Hello, {{ username }}</h1>
+        <h2>Your Game History:</h2>
+        <p>Wins: <span id="wins">{{wins}}</span></p>
+        <p>Losses: <span id="losses">{{losses}}</span></p>
+        <p>Draws: <span id="draws">{{draws}}</span></p>
+    </div>
+    <!-- player can create a game here -->
+    <form action="/create_game" method="post">
+        <input type="hidden" name="session_id" value="{{session_id}}">
+        <button type="submit">Create Game</button>
+    </form>
+    <!-- player can join the game here using the game id -->
+    <form action="/join_game" method="post">
+        <input type="hidden" name="session_id" value="{{session_id}}">
+        <input type="text" name="game_id" placeholder="Enter Game ID">
+        <button type="submit">Join Game</button>
+    </form>
+</body>
+</html>

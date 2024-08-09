@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration defines this document as HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <!-- The charset meta tag specifies the character encoding for this HTML document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- The viewport meta tag ensures the page is displayed correctly across all devices -->
+    <title>Game Page</title>
+     <!-- The title of the web page as it will appear in the browser tab -->
+    <meta http-equiv="refresh" content="5" />
+
+    <style>
+       /* CSS styles defined here apply custom visuals to different parts of the game interface */
+       /* General styles for board tiles, with specific styles for borders to create a grid */
+        .topLeft{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .topRight{
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .center{
+    border: 1px solid black;
+  }
+  .bottomLeft{
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+  }
+  .bottomRight{
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+  }
+  .topLeftBig{
+    background-Color:rgba(166, 166, {{highlight[0]}}, 0.3);
+    border-right: 5px solid black;
+    border-bottom: 5px solid black;
+  }
+  .topRightBig{
+    background-Color:rgb(166,166,{{highlight[2]}},.3);
+    border-left: 5px solid black;
+    border-bottom: 5px solid black;
+  }
+  .topBig{
+    background-Color:rgb(166,166,{{highlight[1]}},.3);
+  }
+  .centerLeftBig{
+    background-Color:rgb(166,166,{{highlight[3]}},.3);
+  }
+  .centerBig{
+    background-Color:rgb(166,166,{{highlight[4]}},.3);
+    border: 5px solid black;
+  }
+  .centerRightBig{
+    background-Color:rgb(166,166,{{highlight[5]}},.3);
+  }
+  .bottomLeftBig{
+    background-Color:rgb(166,166,{{highlight[6]}},.3);
+    border-right: 5px solid black;
+    border-top: 5px solid black;
+  }
+  .bottomBig{
+    background-Color:rgb(166,166,{{highlight[7]}},.3);
+  }
+  .bottomRightBig{
+    background-Color:rgb(166,166,{{highlight[8]}},.3);
+    border-left: 5px solid black;
+    border-top: 5px solid black;
+  }
+
+  table{
+    width:100px;
+    height:100px;
+    border-collapse: collapse;
+  }
+  td{
+    text-align:center;
+    color: white;
+    height:30px;
+    width:30px;
+  }
+  body{
+    background-color: rgb(149, 77, 77);
+  }
+  .notificationBar {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #132a58;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+ }
+
+
+  input {
+    background: #1e1a1a;
+    color: #e8e1e1;
+    border-radius: 6px;
+    padding: 5px 10px;
+    border: 0;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .gameStatus {
+    color: #333;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    padding: 20px 20px;
+    margin: 60px auto;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: fit-content;
+}
+
+  .areaOne{
+    display: none;
+    position:absolute;
+    top:0px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaTwo{
+    display: none;
+    position:absolute;
+    top:0px;
+    left:107px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaThree{
+    display: none;
+    position:absolute;
+    top:0px;
+    left:214px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaFour{
+    display: none;
+    position:absolute;
+    top:107px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaFive{
+    display: none;
+    position:absolute;
+    top:107px;
+    left:107px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaSix{
+    display: none;
+    position:absolute;
+    top:107px;
+    left:214px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaSeven{
+    display: none;
+    position:absolute;
+    top:214px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaEight{
+    display: none;
+    position:absolute;
+    top:214px;
+    left:107px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+  .areaNine{
+    display: none;
+    position:absolute;
+    top:214px;
+    left:214px;
+    height:102px;
+    width:102px;
+    text-align:center;
+  }
+
+  p{
+    position:relative;
+    top:-105px;
+    font-size:100px;
+  }
+
+
+  h1{
+    position:relative;
+    font-size:80px;
+    color:red;
+    font-style: Arial;
+    font-weight: bold;
+  }
+
+  .tile-button {
+  height: 34px;
+  width: 34px;
+  border: none;
+  background: transparent;
+  }
+
+  .wholeContainer{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+  }
+
+    </style>
+
+    <body>
+
+      <!-- Notification bar displays dynamic messages, e.g., player waiting status -->
+      <div id="gameStatus" class="gameStatus">Game is ready to start!</div>
+      <!-- Game status message updated dynamically to reflect current game state -->
+      <div id="gameBoard" style="display:flex;">
+      <!--Main game board container, using flexbox to center the content -->
+        <div class="wholeContainer">
+            <!-- Nested tables represent the game board, each cell potentially contains a smaller game board -->
+            <table>
+              <!-- Each row and cell within has a unique class for styling and identification -->
+              <tr class="topRow">
+                <td id="topLeftBig" class="topLeftBig">
+                  <!-- Nested table for a "big" game area with its own set of "small" cells -->
+                  <table class="1">
+                    <tr>
+                      <td class="topLeft" id="1.1">
+                        <!--Generating all these form tags so that server can call the board-->
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                           <!-- Hidden inputs to pass the coordinates of the move to the server -->
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button  type="submit" class="tile-button">{{game[0]}}</button>
+                        </form>
+                        <!-- rest of them will follow mostly the same method -->
+                      </td>
+                      <td class="top" id="1.2">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[1]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="1.3">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[2]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="1.4">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[3]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="1.5">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[4]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="1.6">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[5]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="1.7">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[6]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="1.8">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[7]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="1.9">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[8]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="topBig" class="topBig">
+                  <table class="2">
+                    <tr>
+                      <td class="topLeft" id="2.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[9]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="2.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[10]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="2.3">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[11]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="2.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[12]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="2.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[13]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="2.6">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[14]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="2.7">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[15]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="2.8">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[16]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="2.9">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[17]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="topRightBig" class="topRightBig">
+                  <table class="3">
+                    <tr>
+                      <td class="topLeft" id="3.1">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[18]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="3.2">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[19]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="3.3">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[20]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="3.4">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[21]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="3.5">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[22]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="3.6">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[23]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="3.7">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[24]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="3.8">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[25]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="3.9">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="1">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[26]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr class="centerRow">
+                <td id="centerLeftBig" class="centerLeftBig">
+                  <table class="4">
+                    <tr>
+                      <td class="topLeft" id="4.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[27]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="4.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[28]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="4.3">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[29]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="4.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[30]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="4.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[31]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="4.6">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[32]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="4.7">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[33]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="4.8">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[34]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="4.9">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[35]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="centerBig" class="centerBig">
+                  <table class="5">
+                    <tr>
+                      <td class="topLeft" id="5.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[36]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="5.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[37]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="5.3" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[38]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="5.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[39]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="5.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[40]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="5.6" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[41]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="5.7" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[42]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="5.8" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[43]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="5.9">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[44]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="centerRightBig" class="centerRightBig">
+                  <table class="6">
+                    <tr>
+                      <td class="topLeft" id="6.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[45]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="6.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[46]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="6.3" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[47]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="6.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[48]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="6.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[49]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="6.6" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[50]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="6.7" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[51]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="6.8" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[52]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="6.9" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="2">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[53]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr class="bottomRow">
+                <td id="bottomLeftBig" class="bottomLeftBig">
+                  <table class="7">
+                    <tr>
+                      <td class="topLeft" id="7.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[54]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="7.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[55]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="7.3" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[56]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="7.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[57]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="7.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[58]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="7.6" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[59]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="7.7" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[60]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="7.8" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[61]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="7.9" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="1">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[62]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="bottomBig" class="bottomBig">
+                  <table class="8">
+                    <tr>
+                      <td class="topLeft" id="8.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[63]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="8.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[64]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="8.3">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[65]}}</button>
+                        </form>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="8.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[66]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="8.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[67]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="8.6" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[68]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="8.7">
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[69]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="8.8" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[70]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="8.9" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="2">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[71]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="bottomRightBig" class="bottomRightBig">
+                  <table class="9">
+                    <tr>
+                      <td class="topLeft" id="9.1" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[72]}}</button>
+                        </form>
+                      </td>
+                      <td class="top" id="9.2" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[73]}}</button>
+                        </form>
+                      </td>
+                      <td class="topRight" id="9.3" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="1">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[74]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="centerLeft" id="9.4" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[75]}}</button>
+                        </form>
+                      </td>
+                      <td class="center" id="9.5" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[76]}}</button>
+                        </form>
+                      </td>
+                      <td class="centerRight" id="9.6" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="2">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[77]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bottomLeft" id="9.7" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="1">
+                          <button type="submit" class="tile-button">{{game[78]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottom" id="9.8" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="2">
+                          <button type="submit" class="tile-button">{{game[79]}}</button>
+                        </form>
+                      </td>
+                      <td class="bottomRight" id="9.9" >
+                        <form action="/game?session_id={{session_id}}&game_id={{game_id}}" method="POST">
+                          <input type="hidden" name="bigRow" value="3">
+                          <input type="hidden" name="bigCol" value="3">
+                          <input type="hidden" name="smallRow" value="3">
+                          <input type="hidden" name="smallCol" value="3">
+                          <button type="submit" class="tile-button">{{game[80]}}</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <div>
+              <!-- Overlay areas for displaying large symbols (X or O) over the big game areas -->
+              <div id="areaOne" class="areaOne">
+                <p id="areaOneText">X</p>
+              </div>
+              <div id="areaTwo" class="areaTwo">
+                <p id="areaTwoText">X</p>
+              </div>
+              <div id="areaThree" class="areaThree">
+                <p id="areaThreeText">X</p>
+              </div>
+              <div id="areaFour" class="areaFour">
+                <p id="areaFourText">X</p>
+              </div>
+              <div id="areaFive" class="areaFive">
+                <p id="areaFiveText">X</p>
+              </div>
+              <div id="areaSix" class="areaSix">
+                <p id="areaSixText">X</p>
+              </div>
+              <div id="areaSeven" class="areaSeven">
+                <p id="areaSevenText">X</p>
+              </div>
+              <div id="areaEight" class="areaEight">
+                <p id="areaEightText">X</p>
+              </div>
+              <div id="areaNine" class="areaNine">
+                <p id="areaNineText">X</p>
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+    </body>
+    </html>

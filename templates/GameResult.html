@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- The DOCTYPE declaration defines this document as HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- The charset meta tag specifies the character encoding for this HTML document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The viewport meta tag ensures the page is displayed correctly across all devices -->
+    <title>Game Result</title>
+    <!-- The title of the web page as it will appear in the browser tab -->
+
+    <style>
+        /* CSS styles for the body, result, and form */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: rgb(149, 77, 77);
+            margin: 0;
+        }
+        .result {
+            font-size: 50px;
+            color: #333;
+            font-weight: bold;
+        }
+        form {
+            margin-top: 20px; /* Adds space between the game result and the form */
+        }
+        input[type="submit"] {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: rgb(24, 22, 22);
+            border: 2px solid #333;
+            color: #e9e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #4f0000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main content of the document displayed to the user -->
+    <div class="result" id="result">
+         <!-- Container for the game result, styled with CSS for visibility -->
+        <p> {{end_game}} </p>
+        <!-- Placeholder for displaying the end game result dynamically. The {{end_game}} will be replaced with actual game result content when the page is rendered by a server-side template engine or client-side script. -->
+    </div>
+    <!-- an option to back to previous game options page-->
+    <div>
+        <form action="/to_options?session_id={{session_id}}" method="POST">
+            <input type="submit" value="Go back to game options">
+        </form>
+    </div>
+</body>
+</html>

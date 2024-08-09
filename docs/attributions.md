@@ -1,0 +1,17 @@
+## Task source attributions
+
+| Source                                                                                                            | Contribution                                                              | Location                         |
+|-------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------|
+| https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe                                                                | Got definition of Ultimate tic-tac-toe                                    | docs/arch_project.md             |
+| https://www.cs.mun.ca/~brown/cs2005/note-8.html                                                                   | Learned about UML diagrams                                                | docs/arch_UMLDiagram.md          |
+| https://www.youtube.com/watch?v=YbpKMIUjvK8                                                                       | learnt the basics of unit test from here                                  | html_test.py                     |
+| https://www.reddit.com/r/learnpython/comments/v8bscr/comment/ibs9e6y/?utm_source=share&utm_medium=web2x&context=3 | concise way to check win condition                                        | game.py                          | 
+| https://chat.openai.com/c/ed460fcd-93da-4a7e-a42e-6becffdeeff0                                                    | Helped write process model file                                           | process-model.md                 |
+| https://codepen.io/Smaugizard/pen/PoXpobB?fbclid=IwAR0wSHNOwDT5wZ2dGcX2SbOT9oq0LnCfV7qvyAfZUBuIO2UGshwwsPEnDTY    | Helped me in making the game board                                        | MainGamePage.html                |
+| https://www.w3schools.com/html/default.asp                                                                        | Helped in understanding some basic properties of HTML                     | templates                        |
+| https://www.youtube.com/watch?v=1PnVor36_40                                                                       | Watched this video to learn some important properties about CSS styling   | templates                        |
+| http://chat.openai.com                                                                                            | Helped write the user and game storage functions and associated unittests | persistance.py and store_test.py |
+| https://realpython.com/python-do-while/                                                                           | code here gave me ideas for create_session                                | user.py                          |
+| https://careerkarma.com/blog/error-git-overwritten-by-checkout/                                                   | used this source to debug some issues my IDE was giving                   | user.py                          |
+| https://stackoverflow.com/questions/8987231/why-do-my-tests-fail-when-run-together-but-pass-individually          | used this answer to fix an issue with my tests                            | user_test.py                     |
+| http://chat.openai.com                                                                                            | used to help figure out how routing of players should work                | server.py                        |
